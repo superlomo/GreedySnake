@@ -1,0 +1,14 @@
+build
+.vs/
+*.pdb
+*.vcxproj.user
+*.obj
+*.tlog
+*.pro.user
+*.pro.user.*
+.sync
+*.log
+*log.txt
+/x64
+
+snake/x64
