@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "GameMainWidget.h"
 #include "GameManager.h"
+#include "SoundManager.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QWidget(parent)
@@ -35,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
 		{
 			m_gameMainWidget->repaint();
 		});
+	m_soundManager = new SoundManager(this);
+	m_soundManager->playBackgroundMusic();
 }
 
 MainWindow::~MainWindow()

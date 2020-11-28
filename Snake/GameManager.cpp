@@ -86,11 +86,12 @@ void GameManager::excute()
 		else if (cellType == CellType::Food)
 		{ 
 			m_snakeManagerPtr->grow(nextLocation);
-			bool winTheGame = !m_foodGeneratorPtr->generateNewFood();
-			if (winTheGame)
+			if (m_snakeManagerPtr->getSnakeLength() == (m_cellWidth * m_cellHeight))
 			{
 
 			}
+			else
+				m_foodGeneratorPtr->generateNewFood();
 		}
 	}
 	Q_EMIT repaint();

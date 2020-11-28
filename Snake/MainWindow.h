@@ -5,6 +5,7 @@
 
 class GameMainWidget;
 class GameManager;
+class SoundManager;
 
 class MainWindow : public QWidget
 {
@@ -17,4 +18,5 @@ private:
 	Ui::MainWindow ui;
 	GameMainWidget* m_gameMainWidget = nullptr;
 	GameManager* m_gameManager = nullptr;
+	SoundManager* m_soundManager = nullptr;
 };
