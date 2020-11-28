@@ -29,11 +29,11 @@ private:
 	void getCellSideLengthInPixel();
 
 private:
-	const QColor m_cellColor = {200, 150, 70};
+	const QColor m_cellColor = {200, 160, 80};
 	const QColor m_backgroundColor = { 200, 200, 200 };
 	const QColor m_snakeLiveColor = { 250, 80, 80 }; /*{ 100, 100, 110 };*/
 	const QColor m_snakeEyeColor = { 200,200,200 };
-	const QColor m_snakeDeadColor = { 255, 20, 20 };
+	const QColor m_snakeDeadColor = { 240, 40, 40 };
 	const QColor m_foodColor = { 80, 150, 80 };
 	const int m_cellGap = 2;
 	std::shared_ptr<CellManager> m_cellManagerPtr;

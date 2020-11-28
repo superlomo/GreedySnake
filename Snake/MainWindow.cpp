@@ -7,10 +7,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowTitle("GreedySnake");
+
 	m_gameManager = new GameManager(this);
+	m_gameManager->newGame();
 
 	m_gameMainWidget = new GameMainWidget(this);
 	ui.horizontalLayout_game->addWidget(m_gameMainWidget);
+	m_gameMainWidget->setCellManagerPtr(m_gameManager->getCellManager());
+	m_gameMainWidget->setSnakeManagerPtr(m_gameManager->getSnakeManager());
 	
 	connect(m_gameMainWidget, &GameMainWidget::startOrStop, this, [this]
 		{
@@ -18,8 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
 			if (!isRunning)
 			{
 				m_gameManager->start();
-				m_gameMainWidget->setCellManagerPtr(m_gameManager->getCellManager());
-				m_gameMainWidget->setSnakeManagerPtr(m_gameManager->getSnakeManager());
 			}
 			else
 			{

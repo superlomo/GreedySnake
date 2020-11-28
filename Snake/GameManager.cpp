@@ -22,10 +22,10 @@ void GameManager::newGame()
 
 	m_first = true;
 
-	start();
+	init();
 }
 
-void GameManager::start()
+void GameManager::init()
 {
 	if (!m_cellManagerPtr)
 	{
@@ -48,7 +48,10 @@ void GameManager::start()
 		m_foodGeneratorPtr->generateNewFood();
 		m_first = false;
 	}
+}
 
+void GameManager::start()
+{
 	m_mainTimer.start();
 	m_isRunning = true;
 }
@@ -83,7 +86,11 @@ void GameManager::excute()
 		else if (cellType == CellType::Food)
 		{ 
 			m_snakeManagerPtr->grow(nextLocation);
-			m_foodGeneratorPtr->generateNewFood();
+			bool winTheGame = !m_foodGeneratorPtr->generateNewFood();
+			if (winTheGame)
+			{
+
+			}
 		}
 	}
 	Q_EMIT repaint();

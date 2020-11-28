@@ -1,7 +1,13 @@
 #include "FoodGenerator.h"
-#include <random>
 #include "CellManager.h"
 #include "SnakeManager.h"
+#include <iostream>
+#include <chrono>
+
+FoodGenerator::FoodGenerator()
+{
+	m_randomEngine.seed(std::chrono::steady_clock::now().time_since_epoch().count());
+}
 
 void FoodGenerator::init(std::shared_ptr<CellManager> cellManagerPtr, std::shared_ptr<SnakeManager> snakeManagerPtr)
 {
@@ -9,20 +15,26 @@ void FoodGenerator::init(std::shared_ptr<CellManager> cellManagerPtr, std::share
 	m_snakeManagerPtr = snakeManagerPtr;
 }
 
-void FoodGenerator::generateNewFood()
+bool FoodGenerator::generateNewFood()
 {
-	std::default_random_engine randomEngine;
 	std::vector<Cell>& cells = m_cellManagerPtr->getCells();
-	int choosenIndex = randomEngine() % (cells.size() - m_snakeManagerPtr->getSnakeLength());
-	
-	int i = 0;
-	for (auto& cell : cells)
+	int blanckCellCounts = cells.size() - m_snakeManagerPtr->getSnakeLength();
+	if (blanckCellCounts)
 	{
-		if (cell.type == CellType::Blank)
+		int choosenIndex = m_randomEngine() % blanckCellCounts;
+
+		int i = 0;
+		for (auto& cell : cells)
 		{
-			if (i == choosenIndex)
-				cell.type = CellType::Food;
-			i++;
+			if (cell.type == CellType::Blank)
+			{
+				if (i == choosenIndex)
+					cell.type = CellType::Food;
+				i++;
+			}
 		}
+		return true;
 	}
+	else
+		return false;
 }

@@ -23,6 +23,7 @@ public:
 public Q_SLOTS:
 	void newGame();
 	void start();
+	void init();
 	void stop();
 	void turn(Direction direction);
 	inline bool isRunning() { return m_isRunning; }
@@ -31,7 +32,7 @@ Q_SIGNALS:
 	void repaint();
 
 private:
-	int m_updateInterval = 200; //ms
+	int m_updateInterval = 220; //ms
 	const int m_cellWidth = 16;
 	const int m_cellHeight = 16;
 	const Location m_startLocation = { 8, 8 };
