@@ -77,6 +77,7 @@ void GameManager::excute()
 		stop();
 		m_gameStatus = GameStatus::Losed;
 	}
+	else
 	{
 		if (cellType == CellType::Blank)
 		{
