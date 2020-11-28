@@ -19,6 +19,7 @@ public:
 
 	auto getCellManager() { return m_cellManagerPtr; }
 	auto getSnakeManager() { return m_snakeManagerPtr; }
+	int getScore() { return m_score; }
 
 public Q_SLOTS:
 	void newGame();
@@ -29,7 +30,7 @@ public Q_SLOTS:
 	inline bool isRunning() { return m_isRunning; }
 
 Q_SIGNALS:
-	void repaint();
+	void updateSignal();
 
 private:
 	int m_updateInterval = 220; //ms
@@ -44,6 +45,7 @@ private:
 	std::shared_ptr<FoodGenerator> m_foodGeneratorPtr;
 	bool m_isRunning = false;
 	bool m_first = true;
+	int m_score = 0;
 
 private Q_SLOTS:
 	void excute();

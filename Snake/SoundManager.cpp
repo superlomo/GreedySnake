@@ -16,8 +16,11 @@ SoundManager::~SoundManager()
 void SoundManager::playBackgroundMusic()
 {
 	m_mainBackgroundPlayList = new QMediaPlaylist(this);
-	m_mainBackgroundPlayList->addMedia(QUrl(m_mainBackgroundMusic));
-	m_mainBackgroundPlayList->setPlaybackMode(QMediaPlaylist::Loop);
+	for (auto& musicName : m_mainBackgroundMusicList)
+	{
+		m_mainBackgroundPlayList->addMedia(QUrl(musicName));
+	}
+	m_mainBackgroundPlayList->setPlaybackMode(QMediaPlaylist::Random);
 	m_mediaPlayer->setPlaylist(m_mainBackgroundPlayList);
 	m_mediaPlayer->setVolume(50);
 	m_mediaPlayer->play();

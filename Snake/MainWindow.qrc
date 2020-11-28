@@ -2,5 +2,7 @@
     <qresource prefix="/MainWindow">
         <file>resource/icon/icon.png</file>
         <file>resource/music/Bumbling-Burglars_Looping.mp3</file>
+        <file>resource/music/The-Hard-Luck-Gang.mp3</file>
+        <file>resource/music/Trancyvania.mp3</file>
     </qresource>
 </RCC>

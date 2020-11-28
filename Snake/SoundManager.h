@@ -19,5 +19,10 @@ public:
 private:
 	QMediaPlayer* m_mediaPlayer;
 	QMediaPlaylist *m_mainBackgroundPlayList;
-	const QString m_mainBackgroundMusic = "qrc:/MainWindow/resource/music/Bumbling-Burglars_Looping.mp3";
+	const QStringList m_mainBackgroundMusicList =
+	{
+		"qrc:/MainWindow/resource/music/Bumbling-Burglars_Looping.mp3",
+		//"qrc:/MainWindow/resource/music/The-Hard-Luck-Gang.mp3",
+		//"qrc:/MainWindow/resource/music/Trancyvania.mp3"
+	};
 };

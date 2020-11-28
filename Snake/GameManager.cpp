@@ -21,6 +21,7 @@ void GameManager::newGame()
 	m_foodGeneratorPtr.reset();
 
 	m_first = true;
+	m_score = 0;
 
 	init();
 }
@@ -85,6 +86,7 @@ void GameManager::excute()
 		}
 		else if (cellType == CellType::Food)
 		{ 
+			m_score++;
 			m_snakeManagerPtr->grow(nextLocation);
 			if (m_snakeManagerPtr->getSnakeLength() == (m_cellWidth * m_cellHeight))
 			{
@@ -94,5 +96,5 @@ void GameManager::excute()
 				m_foodGeneratorPtr->generateNewFood();
 		}
 	}
-	Q_EMIT repaint();
+	Q_EMIT updateSignal();
 }

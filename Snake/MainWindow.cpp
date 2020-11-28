@@ -2,6 +2,7 @@
 #include "GameMainWidget.h"
 #include "GameManager.h"
 #include "SoundManager.h"
+#include "ControlBoard.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QWidget(parent)
@@ -32,12 +33,15 @@ MainWindow::MainWindow(QWidget *parent)
 		});
 	connect(m_gameMainWidget, &GameMainWidget::turn, m_gameManager, &GameManager::turn);
 
-	connect(m_gameManager, &GameManager::repaint, m_gameMainWidget, [this]
+	connect(m_gameManager, &GameManager::updateSignal, this, [this]
 		{
+			m_controlBoard->setScore(m_gameManager->getScore());
 			m_gameMainWidget->repaint();
 		});
 	m_soundManager = new SoundManager(this);
 	m_soundManager->playBackgroundMusic();
+
+	m_controlBoard = new ControlBoard(this, &ui);
 }
 
 MainWindow::~MainWindow()
