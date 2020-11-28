@@ -87,6 +87,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CellManager.cpp" />
+    <ClCompile Include="FoodGenerator.cpp" />
     <ClCompile Include="GameMainWidget.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -106,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CellManager.h" />
+    <ClInclude Include="FoodGenerator.h" />
     <ClInclude Include="GlobalDefine.h" />
     <QtMoc Include="SoundManager.h" />
     <QtMoc Include="GameManager.h" />

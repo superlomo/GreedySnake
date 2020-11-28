@@ -1,6 +1,6 @@
 #pragma once
 
-enum CellType
+enum class CellType
 {
 	Blank,
 
@@ -11,15 +11,21 @@ enum CellType
 	Food,
 };
 
-enum Direction
+struct Cell
 {
+	CellType type = CellType::Blank;
+};
+
+enum class Direction
+{
+	Undefined,
 	Left,
 	Right,
 	Top,
-	Bottom
+	Down
 };
 
-enum NodeType
+enum class NodeType
 {
 	Head,
 	Body,
@@ -31,6 +37,8 @@ struct Location
 	unsigned int x;
 	unsigned int y;
 };
+
+using Size = Location;
 
 struct SnakeNode
 {
