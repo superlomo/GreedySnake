@@ -9,12 +9,20 @@ class SnakeManager;
 class CellManager;
 class FoodGenerator;
 
+enum class GameStatus
+{
+	Unstarted,
+	Running,
+	Winned,
+	Losed
+};
+
 class GameManager : public QObject
 {
 	Q_OBJECT
 
 public:
-	GameManager(QObject *parent);
+	GameManager(QObject *parent = nullptr);
 	~GameManager();
 
 	auto getCellManager() { return m_cellManagerPtr; }
@@ -24,10 +32,9 @@ public:
 public Q_SLOTS:
 	void newGame();
 	void start();
-	void init();
 	void stop();
 	void turn(Direction direction);
-	inline bool isRunning() { return m_isRunning; }
+	inline GameStatus getGameStatus() { return m_gameStatus; }
 
 Q_SIGNALS:
 	void updateSignal();
@@ -43,9 +50,9 @@ private:
 	std::shared_ptr<SnakeManager> m_snakeManagerPtr;
 	std::shared_ptr<CellManager> m_cellManagerPtr;
 	std::shared_ptr<FoodGenerator> m_foodGeneratorPtr;
-	bool m_isRunning = false;
 	bool m_first = true;
 	int m_score = 0;
+	GameStatus m_gameStatus = GameStatus::Unstarted;
 
 private Q_SLOTS:
 	void excute();

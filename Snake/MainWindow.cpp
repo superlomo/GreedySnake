@@ -11,31 +11,39 @@ MainWindow::MainWindow(QWidget *parent)
 
 	this->setWindowTitle("GreedySnake");
 
-	m_gameManager = new GameManager(this);
-	m_gameManager->newGame();
+	m_gameManagerPtr.reset(new GameManager);
+	m_gameManagerPtr->newGame();
 
 	m_gameMainWidget = new GameMainWidget(this);
 	ui.horizontalLayout_game->addWidget(m_gameMainWidget);
-	m_gameMainWidget->setCellManagerPtr(m_gameManager->getCellManager());
-	m_gameMainWidget->setSnakeManagerPtr(m_gameManager->getSnakeManager());
+	m_gameMainWidget->setCellManagerPtr(m_gameManagerPtr->getCellManager());
+	m_gameMainWidget->setSnakeManagerPtr(m_gameManagerPtr->getSnakeManager());
+	m_gameMainWidget->setGameManagerPtr(m_gameManagerPtr);
 	
 	connect(m_gameMainWidget, &GameMainWidget::startOrStop, this, [this]
 		{
-			bool isRunning = m_gameManager->isRunning();
-			if (!isRunning)
+			GameStatus gameStatus = m_gameManagerPtr->getGameStatus();
+			if ((gameStatus == GameStatus::Losed) || (gameStatus == GameStatus::Winned))
 			{
-				m_gameManager->start();
+				m_gameManagerPtr->newGame();
+				m_gameMainWidget->setCellManagerPtr(m_gameManagerPtr->getCellManager());
+				m_gameMainWidget->setSnakeManagerPtr(m_gameManagerPtr->getSnakeManager());
+				m_gameManagerPtr->start();
 			}
-			else
+			else if (gameStatus == GameStatus::Running)
 			{
-				m_gameManager->stop();
+				m_gameManagerPtr->stop();
+			}
+			else if (gameStatus == GameStatus::Unstarted)
+			{
+				m_gameManagerPtr->start();
 			}
 		});
-	connect(m_gameMainWidget, &GameMainWidget::turn, m_gameManager, &GameManager::turn);
+	connect(m_gameMainWidget, &GameMainWidget::turn, m_gameManagerPtr.get(), &GameManager::turn);
 
-	connect(m_gameManager, &GameManager::updateSignal, this, [this]
+	connect(m_gameManagerPtr.get(), &GameManager::updateSignal, this, [this]
 		{
-			m_controlBoard->setScore(m_gameManager->getScore());
+			m_controlBoard->setScore(m_gameManagerPtr->getScore());
 			m_gameMainWidget->repaint();
 		});
 	m_soundManager = new SoundManager(this);

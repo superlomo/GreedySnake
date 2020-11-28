@@ -23,11 +23,6 @@ void GameManager::newGame()
 	m_first = true;
 	m_score = 0;
 
-	init();
-}
-
-void GameManager::init()
-{
 	if (!m_cellManagerPtr)
 	{
 		m_cellManagerPtr.reset(new CellManager(m_cellWidth, m_cellHeight));
@@ -49,23 +44,25 @@ void GameManager::init()
 		m_foodGeneratorPtr->generateNewFood();
 		m_first = false;
 	}
+	m_gameStatus = GameStatus::Unstarted;
 }
 
 void GameManager::start()
 {
 	m_mainTimer.start();
-	m_isRunning = true;
+	m_gameStatus = GameStatus::Running;
 }
 
 void GameManager::stop()
 {
-	m_isRunning = false;
+	m_gameStatus = GameStatus::Unstarted;
 	m_mainTimer.stop();
+	Q_EMIT updateSignal();
 }
 
 void GameManager::turn(Direction direction)
 {
-	if(m_isRunning)
+	if(m_gameStatus == GameStatus::Running)
 		m_snakeManagerPtr->turn(direction);
 }
 
@@ -78,6 +75,7 @@ void GameManager::excute()
 	{
 		m_snakeManagerPtr->setDead();
 		stop();
+		m_gameStatus = GameStatus::Losed;
 	}
 	{
 		if (cellType == CellType::Blank)
@@ -90,7 +88,7 @@ void GameManager::excute()
 			m_snakeManagerPtr->grow(nextLocation);
 			if (m_snakeManagerPtr->getSnakeLength() == (m_cellWidth * m_cellHeight))
 			{
-
+				m_gameStatus = GameStatus::Winned;
 			}
 			else
 				m_foodGeneratorPtr->generateNewFood();

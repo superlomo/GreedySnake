@@ -18,7 +18,7 @@ public:
 private:
 	Ui::MainWindow ui;
 	GameMainWidget* m_gameMainWidget = nullptr;
-	GameManager* m_gameManager = nullptr;
+	std::shared_ptr<GameManager> m_gameManagerPtr = nullptr;
 	SoundManager* m_soundManager = nullptr;
 	ControlBoard *m_controlBoard = nullptr;
 };

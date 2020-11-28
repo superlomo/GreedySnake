@@ -5,6 +5,8 @@
 #include <qpen.h>
 #include "CellManager.h"
 #include "SnakeManager.h"
+#include "GameManager.h"
+#include <cmath>
 
 GameMainWidget::GameMainWidget(QWidget*parent)
 	: QWidget(parent)
@@ -29,6 +31,8 @@ void GameMainWidget::paintEvent(QPaintEvent* event)
 
 		paintbackground(painter);
 		paintCell(painter);
+		if(m_gameManagerPtr->getGameStatus() != GameStatus::Running)
+			paintStopIcon(painter);
 	}
 }
 
@@ -135,6 +139,22 @@ void GameMainWidget::paintFood(QPainter& painter, Location startPoint)
 	painter.setPen(pen);
 	QRectF rectangle(startPoint.x, startPoint.y, m_cellSideLengthInPixel, m_cellSideLengthInPixel);
 	painter.drawEllipse(rectangle);
+}
+
+void GameMainWidget::paintStopIcon(QPainter& painter)
+{
+	painter.setPen(QColor(100, 100, 100, 100));
+	painter.setBrush(QColor(100, 100, 100, 100));
+	painter.drawEllipse(QPoint(m_widgetWidthInPixel / 2, m_widgetHeightInPixel / 2), 40, 40);
+
+	painter.setPen(QColor(50, 50, 50, 100));
+	painter.setBrush(QColor(50, 50, 50, 100));
+	const int triangleOutterCircleSemiDiameter = 30;
+	std::vector<QPointF> points = {
+		QPointF(m_widgetWidthInPixel / 2 + triangleOutterCircleSemiDiameter, m_widgetHeightInPixel / 2),
+		QPointF(m_widgetWidthInPixel / 2 - triangleOutterCircleSemiDiameter / 2, m_widgetHeightInPixel / 2 + triangleOutterCircleSemiDiameter / 2 * std::sqrt(3)),
+		QPointF(m_widgetWidthInPixel / 2 - triangleOutterCircleSemiDiameter / 2, m_widgetHeightInPixel / 2 - triangleOutterCircleSemiDiameter / 2 * std::sqrt(3))};
+	painter.drawPolygon(points.data(), 3);
 }
 
 Location GameMainWidget::getCellStartPointByIndex(int index)

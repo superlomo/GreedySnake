@@ -6,6 +6,7 @@
 
 class CellManager;
 class SnakeManager;
+class GameManager;
 
 class GameMainWidget : public QWidget
 {
@@ -17,6 +18,7 @@ public:
 
 	void setCellManagerPtr(std::shared_ptr<CellManager> cellManagerPtr) { m_cellManagerPtr = cellManagerPtr; }
 	void setSnakeManagerPtr(std::shared_ptr<SnakeManager> snakeManagerPtr) { m_snakeManagerPtr = snakeManagerPtr; }
+	void setGameManagerPtr(std::shared_ptr<GameManager> gameManagerPtr) { m_gameManagerPtr = gameManagerPtr; }
 private:
 	void paintbackground(QPainter &painter);
 	void paintCell(QPainter& painter);
@@ -24,6 +26,7 @@ private:
 	void paintSnakeHead(QPainter& painter, Location startPoint, Direction direction);
 	void paintSnakeBody(QPainter& painter, Location startPoint);
 	void paintFood(QPainter& painter, Location startPoint);
+	void paintStopIcon(QPainter& painter);
 	
 	Location getCellStartPointByIndex(int index);
 	void getCellSideLengthInPixel();
@@ -38,6 +41,7 @@ private:
 	const int m_cellGap = 2;
 	std::shared_ptr<CellManager> m_cellManagerPtr;
 	std::shared_ptr<SnakeManager> m_snakeManagerPtr;
+	std::shared_ptr<GameManager> m_gameManagerPtr;
 	unsigned int m_widgetWidthInPixel;
 	unsigned int m_widgetHeightInPixel;
 	unsigned int m_sideLengthInPixel;
